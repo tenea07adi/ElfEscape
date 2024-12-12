@@ -1,9 +1,12 @@
 using UnityEngine;
 
-public abstract class CharacterTemplate : MonoBehaviour
+public abstract class CharacterTemplate : MonoBehaviour, IMovementBehaviour, IHpBehaviour
 {
-    [SerializeField]
-    protected MovementMechanics movementLogic;
+    [field: SerializeField]
+    public MovementMechanics Movement { get; private set; }
+
+    [field: SerializeField]
+    public HpMechanics Hp { get; private set; }
 
     // Start is called before the first frame update
     void Start()

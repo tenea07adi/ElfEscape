@@ -21,11 +21,20 @@ public class MovementMechanics
 
     private bool LastDirectionRight = true;
 
-    public void Move(float axisPower)
+    public void MoveX(float axisPower)
     {
         UpdateSpriteDirection(axisPower);
 
         Vector3 movement = new Vector3(axisPower * MovementSpeed, 0, 0);
+
+        movement = movement * Time.deltaTime;
+
+        Rigidbody.transform.Translate(movement);
+    }
+
+    public void MoveY(float axisPower)
+    {
+        Vector3 movement = new Vector3(0, axisPower * MovementSpeed, 0);
 
         movement = movement * Time.deltaTime;
 
@@ -42,6 +51,17 @@ public class MovementMechanics
 
             LimitTheJumpVelocity();
         }
+    }
+
+    public void ForceJump()
+    {
+        ResetVelocity();
+
+        Rigidbody.AddForce(Vector2.up * JumpPower, ForceMode2D.Impulse);
+
+        Rigidbody.velocity = new Vector3(0f, Rigidbody.velocity.y, 0f);
+
+        LimitTheJumpVelocity();
     }
 
     public void DoAnimationLogic(float axisPower)
