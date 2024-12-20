@@ -11,4 +11,9 @@ public static class UserInput
     {
         return Input.GetKeyDown(KeyCode.Space);
     }
+
+    public static bool PauseToggle()
+    {
+        return Input.GetKeyDown(KeyCode.Escape);
+    }
 }

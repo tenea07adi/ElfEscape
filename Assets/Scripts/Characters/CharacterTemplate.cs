@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public abstract class CharacterTemplate : MonoBehaviour, IMovementBehaviour, IHpBehaviour
+public abstract class CharacterTemplate : BasePausableGameObjectController, IMovementBehaviour, IHpBehaviour
 {
     [field: SerializeField]
     public MovementMechanics Movement { get; private set; }
@@ -14,8 +14,7 @@ public abstract class CharacterTemplate : MonoBehaviour, IMovementBehaviour, IHp
         AdditionalStartLogic();
     }
 
-    // Update is called once per frame
-    void Update()
+    protected override void UpdateLogic()
     {
         MovementLogic();
         JumpLogic();

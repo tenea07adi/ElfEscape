@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public abstract class TrapTemplate : MonoBehaviour
+public abstract class TrapTemplate : BasePausableGameObjectController
 {
     [SerializeField]
     private int Damage;
@@ -11,8 +11,7 @@ public abstract class TrapTemplate : MonoBehaviour
         AdditionalStartLogic();
     }
 
-    // Update is called once per frame
-    void Update()
+    protected override void UpdateLogic()
     {
         AdditionalUpdateLogic();
     }
@@ -27,8 +26,6 @@ public abstract class TrapTemplate : MonoBehaviour
         }
 
         colHpObject.Hp.DecreaseHp(Damage);
-
-        Debug.Log("Damage");
     }
 
     protected abstract void AdditionalStartLogic();

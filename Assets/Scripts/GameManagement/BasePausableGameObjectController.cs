@@ -5,9 +5,11 @@ public abstract class BasePausableGameObjectController : MonoBehaviour
 
     protected bool isPaused = false;
 
-    protected bool lastStateIsPaused = true;
+    protected bool lastStateIsPaused = false;
 
     protected RigidbodyConstraints2D lastRigidbodyConstraints2D;
+
+    protected Vector2 lastRigidbodyBelocity;
 
     // Update is called once per frame
     void Update()
@@ -47,23 +49,42 @@ public abstract class BasePausableGameObjectController : MonoBehaviour
         isPaused = !isPaused;
     }
 
+    public static void TogglePausableGameObjects()
+    {
+        BasePausableGameObjectController[] pausableObjects = FindObjectsOfType(typeof(BasePausableGameObjectController)) as BasePausableGameObjectController[];
+
+        foreach (var obj in pausableObjects)
+        {
+            obj.TogglePause();
+        }
+    }
+
     protected abstract void UpdateLogic();
 
     protected void Freeze()
     {
-        if (gameObject.GetComponent<Rigidbody2D>() != null)
+        var Rigidbody = gameObject.GetComponent<Rigidbody2D>();
+
+
+        if (Rigidbody != null)
         {
-            lastRigidbodyConstraints2D = gameObject.GetComponent<Rigidbody2D>().constraints;
-            gameObject.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezePositionX | RigidbodyConstraints2D.FreezePositionY | RigidbodyConstraints2D.FreezeRotation;
+            lastRigidbodyBelocity = Rigidbody.velocity;
+
+            lastRigidbodyConstraints2D = Rigidbody.constraints;
+            Rigidbody.constraints = RigidbodyConstraints2D.FreezePositionX | RigidbodyConstraints2D.FreezePositionY | RigidbodyConstraints2D.FreezeRotation;
         }
     }
 
     protected void UnFreeze()
     {
-        if (gameObject.GetComponent<Rigidbody2D>() != null)
+        var Rigidbody = gameObject.GetComponent<Rigidbody2D>();
+
+        if (Rigidbody != null)
         {
-            gameObject.GetComponent<Rigidbody2D>().constraints = lastRigidbodyConstraints2D;
-            gameObject.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezeRotation;
+            Rigidbody.velocity = lastRigidbodyBelocity;
+
+            Rigidbody.constraints = lastRigidbodyConstraints2D;
+            //Rigidbody.constraints = RigidbodyConstraints2D.FreezeRotation;
         }
     }
 }
