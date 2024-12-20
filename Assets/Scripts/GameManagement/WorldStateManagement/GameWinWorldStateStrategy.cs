@@ -1,40 +1,43 @@
 using TMPro;
 using UnityEngine;
 
-public class PlayerAlliveWorldStateStrategy : BaseWorldStateStrategy
+public class GameWinWorldStateStrategy : BaseWorldStateStrategy
 {
     [SerializeField]
-    private GameObject ScorePanel;
+    private GameObject WinPanel;
 
     [SerializeField]
     private TextMeshProUGUI ScoreText;
 
     public override bool ShouldEnter()
     {
-        return false;
+        return EscapeVehicleController._instance.PlayerEntered;
     }
 
     public override bool ShouldExit()
     {
-        return true;
+        return false;
     }
 
     public override void InitLogic()
     {
-        ScorePanel.SetActive(true);
+        SetScore();
+
+        WinPanel.SetActive(true);
+        BasePausableGameObjectController.TogglePausableGameObjects();
     }
 
     public override void MainLogic()
     {
-        UpdateScore();
     }
 
     public override void ExitLogic()
     {
-        ScorePanel.SetActive(false);
+        WinPanel.SetActive(false);
+        BasePausableGameObjectController.TogglePausableGameObjects();
     }
 
-    private void UpdateScore()
+    private void SetScore()
     {
         int fullTimeInSeconds = TimerController.instance.GetCurrentTimeInSeconds(); ;
 
