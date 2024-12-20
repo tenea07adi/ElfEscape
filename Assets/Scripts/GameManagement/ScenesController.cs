@@ -33,6 +33,6 @@ public class ScenesController : MonoBehaviour
     private void InitLevelsList()
     {
         gameLevels.Add(0, "MenuScene");
-        gameLevels.Add(1, "SampleScene");
+        gameLevels.Add(1, "Level01Scene");
     }
 }

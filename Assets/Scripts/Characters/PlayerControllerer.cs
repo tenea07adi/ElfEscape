@@ -15,12 +15,12 @@ public class PlayerControllerer : CharacterTemplate
 
     protected override void MovementLogic()
     {
-        this.Movement.MoveX(UserInput.ReadAxisMovement());
-        this.Movement.DoAnimationLogic(UserInput.ReadAxisMovement());
+        this.Movement.MoveX(UserInputAdapter._instance.ReadAxisMovement());
+        this.Movement.DoAnimationLogic(UserInputAdapter._instance.ReadAxisMovement());
     }
 
     protected override void JumpLogic()
     {
-        this.Movement.Jump(UserInput.ReadJump());
+        this.Movement.Jump(UserInputAdapter._instance.ReadJump());
     }
 }

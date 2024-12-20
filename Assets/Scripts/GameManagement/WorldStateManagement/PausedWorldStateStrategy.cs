@@ -7,12 +7,12 @@ public class PausedWorldStateStrategy : BaseWorldStateStrategy
 
     public override bool ShouldEnter()
     {
-        return UserInput.PauseToggle();
+        return UserInputAdapter._instance.PauseToggle();
     }
 
     public override bool ShouldExit()
     {
-        return UserInput.PauseToggle();
+        return UserInputAdapter._instance.PauseToggle();
     }
 
     public override void InitLogic()
